@@ -1,6 +1,8 @@
 import produceData from '../mockData/produce.json'
 
 const POPULATE = 'cart/POPULATE'
+const DEPOPULATE = 'cart/DEPOPULATE'
+const DECREMENT = 'cart/DECREMENT'
 
 export const populateCart = (produceId) => {
     return {
@@ -12,6 +14,19 @@ export const populateCart = (produceId) => {
     }
 }
 
+export const decrementCart = (produceId) => {
+    return {
+        type: DECREMENT,
+        produceId
+    }
+}
+
+export const depopulateCart = (produceId) => {
+    return {
+        type: DEPOPULATE,
+        produceId
+    }
+}
 
 export default function cartReducer(state = {}, action){
     let newState = {
@@ -24,6 +39,18 @@ export default function cartReducer(state = {}, action){
                 newState[action.item.id].count += 1;
             } else {
                 newState[action.item.id] = action.item
+            }
+            return newState;
+
+        case (DEPOPULATE):
+            delete newState[action.produceId];
+            return newState;
+
+        case (DECREMENT):
+            if (newState[action.produceId].count > 1) {
+                newState[action.produceId].count -= 1
+            } else {
+                delete newState[action.produceId];
             }
             return newState
         default:
