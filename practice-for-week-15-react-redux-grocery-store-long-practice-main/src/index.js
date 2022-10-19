@@ -8,6 +8,10 @@ import { Provider } from 'react-redux';
 
 const store = configureStore();
 
+if (process.env.NODE_ENV !== "production") {
+  window.store = store;
+}
+
 function Root() {
   return (
     <Provider store={store}>
