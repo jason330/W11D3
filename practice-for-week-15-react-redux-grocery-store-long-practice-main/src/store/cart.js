@@ -3,6 +3,7 @@ import produceData from '../mockData/produce.json'
 const POPULATE = 'cart/POPULATE'
 const DEPOPULATE = 'cart/DEPOPULATE'
 const DECREMENT = 'cart/DECREMENT'
+const SETNUM = 'cart/SETNUM'
 
 export const populateCart = (produceId) => {
     return {
@@ -25,6 +26,16 @@ export const depopulateCart = (produceId) => {
     return {
         type: DEPOPULATE,
         produceId
+    }
+}
+
+export const setNumCart = (produceId, num) => {
+    return {
+        type: SETNUM,
+        item: {
+            id: produceId,
+            count: num
+        }
     }
 }
 
@@ -53,6 +64,12 @@ export default function cartReducer(state = {}, action){
                 delete newState[action.produceId];
             }
             return newState
+
+        case (SETNUM):
+            if (action.item.count > 0){
+                newState[action.item.id].count = action.item.count 
+            }
+            return newState 
         default:
           return state;
     }
