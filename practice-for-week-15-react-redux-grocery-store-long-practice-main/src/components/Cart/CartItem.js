@@ -19,7 +19,10 @@ function CartItem({ item }) {
         <input
           type="number"
           value={count}
-          onChange={(e)=> setCount(e.target.value ) }
+          onChange={(e)=> {
+            setCount(e.target.value)
+            dispatch(setNumCart(item.id, parseInt(e.target.value)))
+          }}
         />
         <button onClick={()=> dispatch(populateCart(item.id))}
           className="cart-item-button"
